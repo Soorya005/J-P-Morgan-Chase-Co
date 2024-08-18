@@ -1,0 +1,39 @@
+# notebook.ipynb
+
+# Import required libraries
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+
+# Load the dataset
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Initialize the model
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+
+# Train the model
+model.fit(X_train, y_train)
+
+# Make predictions
+y_pred = model.predict(X_test)
+
+# Evaluate the model
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Accuracy: {accuracy * 100:.2f}%")
+
+# Visualize the results
+plt.figure(figsize=(10, 6))
+plt.scatter(X_test[:, 0], X_test[:, 1], c=y_pred, cmap='viridis', edgecolor='k')
+plt.title('Random Forest Classification Results')
+plt.xlabel('Feature 1')
+plt.ylabel('Feature 2')
+plt.show()
